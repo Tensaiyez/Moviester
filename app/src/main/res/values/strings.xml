@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Moviester</string>
+    <string name="detail_original_title">Original Title:</string>
+    <string name="detail_overview">Overview:</string>
+    <string name="detail_vote_average">Rating:</string>
+    <string name="detail_release_date">Release Date:</string>
+    <string name="detail_error"> Error something is wrong</string>
+    <string name="movie_poster_image">Movie Picture</string>
+    <string name="top_rated">Highest Rated</string>
+    <string name="popular">Most Popular</string>
+    <string-array name="SortArray">
+        <item>@string/popular</item>
+        <item>@string/top_rated</item>
+    </string-array>
+
+</resources>
