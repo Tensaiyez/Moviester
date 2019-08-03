@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:title="Menu"
-    android:id="menu_id"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sort"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:icon="@drawable/ic_sort"
+        android:title="SortBy"
+
+        app:showAsAction="always"
+        >
+        <menu>
+
+            <item
+                android:id="@+id/Popular_mv"
+                android:title="Popular"
+               />
+            <item
+                android:id="@+id/TopRated_mv"
+                android:title="Top Rated" />
+            <item
+                android:id="@+id/Upcoming_mv"
+                android:title="Upcoming"/>
+
+
+        </menu>
+    </item>
+    <item
+        android:id="@+id/Setting"
+        android:icon="@drawable/ic_settings"
+        android:title="Setting"
+        app:showAsAction="always" >
+        <menu>
+            <item android:id="@+id/ThemeSetting"
+                android:title="Theme"
+
+                />
+        </menu>
+    </item>
+    <!--app:actionViewClass="android.widget.Spinner" />-->
 </menu>

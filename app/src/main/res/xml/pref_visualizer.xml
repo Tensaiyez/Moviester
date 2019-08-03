@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<CheckBoxPreference
+    android:defaultValue="true"
+    android:key="red_theme"
+    android:summaryOff="Not Applied"
+    android:summaryOn="Applied"
+    android:title="Red Theme"
+    />
+</PreferenceScreen>

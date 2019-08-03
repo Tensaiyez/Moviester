@@ -1,11 +1,59 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+<!--<item name="android:windowContentTransitions">true</item>-->
+        <item name="android:actionMenuTextColor">@color/black</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
+    </style>
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    <style name="Toolbar.TitleText.Collapsed" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="Toolbar.TitleText.Expanded" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@color/colorAccent</item>
+        <item name="android:titleTextStyle">@style/MyTitleTextStyle</item>
+        <!-- Support library compatibility -->
+        <item name="titleTextStyle">@style/MyTitleTextStyle</item>
+    </style>
+
+    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/black</item>
+    </style>
+    <style name="OverlayPrimaryColorRed">
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/red_200</item>
+        <item name="colorAccent">@color/red_200</item>
+    </style>
+
+    <style name="AppTheme.DetailActivity">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+    <style name="AppTheme.SettingActivity">
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
 </resources>

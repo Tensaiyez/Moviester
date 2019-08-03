@@ -1,47 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
+    android:background="@android:color/black"
+    android:fitsSystemWindows="true"
     android:gravity="top|center"
-    tools:context=".MainActivity">
+    tools:context=".Activity.MainActivity"
+ >
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/rootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Discover"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@android:color/white"
+                    android:clipToPadding="true"
+                    android:visibility="visible"
+                    app:cardCornerRadius="18dp">
+
+                    <TextView
+                        android:id="@+id/PopularTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/delilafreebold"
+                        android:padding="5dp"
+                        android:text="@string/popular"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+                </android.support.v7.widget.CardView>
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="right">
+                <android.support.v7.widget.RecyclerView
 
-        <TextView
-            android:id="@+id/textView"
+                    android:id="@+id/MovieList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:foregroundGravity="top|center"
+                    android:visibility="visible">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/title_main_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@android:color/white"
+                    android:clipToPadding="true"
+                    android:visibility="visible"
+                    app:cardCornerRadius="18dp">
+
+                    <TextView
+                        android:id="@+id/HighestTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/delilafreebold"
+                        android:padding="5dp"
+                        android:text="@string/top_rated"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+
+                    android:id="@+id/MovieList2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:foregroundGravity="top|center"
+                    android:visibility="visible">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/title_main2_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@android:color/white"
+                    android:clipToPadding="true"
+                    android:visibility="visible"
+                    app:cardCornerRadius="18dp">
+
+                    <TextView
+                        android:id="@+id/UpcomingTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/delilafreebold"
+                        android:padding="5dp"
+                        android:text="Upcoming"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+
+                    android:id="@+id/MovieList3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:foregroundGravity="top|center"
+                    android:visibility="visible">
+
+                </android.support.v7.widget.RecyclerView>
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:paddingLeft="15dp"-->
+                <!--android:text="Highest Rated"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="24sp"-->
+                <!--android:textStyle="bold"/>-->
+                <!--<android.support.v7.widget.RecyclerView-->
+
+                <!--android:id="@+id/MovieListTopRated"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:foregroundGravity="top|center">-->
+
+                <!--</android.support.v7.widget.RecyclerView>-->
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+        <android.support.design.widget.BottomNavigationView
+
+            android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sort By:"
-            android:textSize="14dp" />
-
-        <Spinner
-            android:id="@+id/spinner_m"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp" />
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-
-        android:id="@+id/MovieList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:foregroundGravity="top|center">
-
-    </android.support.v7.widget.RecyclerView>
+            android:layout_gravity="bottom|center"
+            android:background="@color/black"
+            app:itemIconTint="@drawable/nav_item_state"
+            app:itemTextColor="@drawable/nav_item_state"
+            app:menu="@menu/bottom_bar"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"/>
 
 
-</LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</RelativeLayout>

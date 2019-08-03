@@ -1,4 +1,4 @@
-package com.example.tensaiye.popularmovie;
+package com.example.tensaiye.popularmovie.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -21,7 +21,10 @@ public class Movie implements Parcelable {
     private String ReleaseDate;
     @SerializedName("backdrop_path")
     private String Backdrop;
-
+    @SerializedName("id")
+    private String Id;
+    @SerializedName("vote_count")
+    private String Vote;
 
 
 
@@ -31,13 +34,19 @@ public class Movie implements Parcelable {
         this.OverView = in.readString();
         this.OriginalName = in.readString();
         this.PosterImage = in.readString();
-        this.Backdrop=in.readString();
+        this.Backdrop = in.readString();
+        this.Id = in.readString();
+        this.Vote = in.readString();
     }
 
 
+    public String getId() {
+        return Id;
+    }
 
-
-
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getOriginalName() {
         return OriginalName;
@@ -87,6 +96,14 @@ public class Movie implements Parcelable {
         this.Backdrop = Backdrop;
     }
 
+    public String getVote() {
+        return Vote;
+    }
+
+    public void setVote(String Vote) {
+        this.Vote = Vote;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -100,6 +117,8 @@ public class Movie implements Parcelable {
         parcel.writeString(OverView);
         parcel.writeString(ReleaseDate);
         parcel.writeString(Backdrop);
+        parcel.writeString(Id);
+        parcel.writeString(Vote);
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {

@@ -1,4 +1,4 @@
-package com.example.tensaiye.popularmovie;
+package com.example.tensaiye.popularmovie.Models;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
@@ -7,9 +7,6 @@ public class Basicmovie {
 
     @SerializedName("results")
     private List<Movie> results;
-    @SerializedName("total_results")
-    private int totalResults;
-
 
     public List<Movie> getResults() {
         return results;
@@ -17,5 +14,7 @@ public class Basicmovie {
     public void setResults(List<Movie> results) {
         this.results = results;
     }
+
+
 
 }
