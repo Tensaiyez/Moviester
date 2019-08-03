@@ -53,7 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -229,6 +229,7 @@ public void defaults(){
     SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 
     myToolbar.setBackgroundColor( sharedPreferences.getInt("red_theme", ContextCompat.getColor(this,R.color.red)));
+    sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 //    if (Build.VERSION.SDK_INT >= 21) {
 //        getWindow().setNavigationBarColor(ContextCompat.getColor(this,R.color.grey));
 //        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.red_200));
@@ -239,6 +240,13 @@ public void defaults(){
 //    Toolbar_tv.setTextColor(ContextCompat.getColor(this,R.color.white));
 
   }
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
     public void FetchFromTMDBTwo(String sort) {
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
@@ -354,6 +362,13 @@ public void defaults(){
         NetworkInfo networkStatus = connectivityManager.getActiveNetworkInfo();
         return networkStatus != null;
 
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.redTheme))) {
+            myToolbar.setBackgroundColor(sharedPreferences.getInt("red_theme", ContextCompat.getColor(this, R.color.red)));
+        }
     }
 }
 

@@ -10,6 +10,7 @@
     <string name="movie_poster_image">Movie Picture</string>
     <string name="top_rated">Highest Rated</string>
     <string name="popular">Popular</string>
+    <string name="redTheme">red_theme</string>
     <string name="favorite">Favorite</string>
     <string name="padding_detail_headers">5dp</string>
     <string name="elevation">6dp</string>
