@@ -14,10 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.SettingActivity"
-            android:theme="@style/AppTheme.SettingActivity"
+        <activity android:name=".Activity.AuthActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.SettingActivity"
             android:parentActivityName=".Activity.MainActivity"
-       />
+            android:theme="@style/AppTheme.SettingActivity" />
 
         <receiver android:name=".MovieAppWidget">
             <intent-filter>
@@ -31,19 +38,13 @@
 
         <activity
             android:name=".Activity.MainActivity"
-            android:launchMode="singleTop"
-            android:configChanges="orientation|keyboardHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTop">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activity.DetailActivity"
             android:theme="@style/AppTheme.DetailActivity" />
-
     </application>
-
 
 </manifest>

@@ -3,7 +3,9 @@ package com.example.tensaiye.popularmovie.Activity;
 import android.app.ActivityOptions;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -40,6 +42,7 @@ import com.example.tensaiye.popularmovie.MovieExecutors;
 import com.example.tensaiye.popularmovie.R;
 import com.example.tensaiye.popularmovie.Models.Review;
 import com.example.tensaiye.popularmovie.Models.Trailer;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
@@ -53,7 +56,7 @@ import retrofit2.Response;
 
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private FirebaseAnalytics mFirebaseAnalytics;
     private Movie movies;
     TextView mTitle;
     TextView mUserRating;
@@ -62,6 +65,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     TextView mVote;
     TextView mReviewContent;
     TextView mNoReview;
+    TextView mNoTrailer;
     FloatingActionButton mButton;
     String vote;
     String title;
@@ -87,10 +91,15 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private boolean isFavorite = false;
     private boolean isfav = true;
 
+    SharedPreferences sharedPreferences2;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         final RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.Favorite_rv);
         recyclerView2.setLayoutManager(new LinearLayoutManager(DetailActivity.this));
@@ -99,7 +108,10 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         mFavoriteAdapter = new FavoriteAdapter(FavoriteList, this,MovieList);
         recyclerView2.setAdapter(mFavoriteAdapter);
 
-
+        sharedPreferences2 = getSharedPreferences("MovieName", Context.MODE_PRIVATE);
+        editor = sharedPreferences2.edit();
+        editor.putString("name", "dsvsvsvsdv");
+        editor.commit();
 
         Toolbar mtoolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(mtoolbar);
@@ -138,6 +150,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
 
         mNoReview = (TextView) findViewById(R.id.NoReview_tv);
+        mNoTrailer=(TextView) findViewById(R.id.NoTrailer_tv);
         mButton = (FloatingActionButton) findViewById(R.id.DetailsaveButton);
 
 
@@ -155,13 +168,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 vote=intent.getStringExtra("vote_count");
 
 
+
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 FetchReviews(id);
                 FetchTrailer(id);
                 FetchCast(id);
 
 
                 populateUI(movies);
+
+
 
             }
             mDb = MovieDatabase.getInstance(getApplicationContext());
@@ -249,6 +266,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.Trailer_rv);
                 recyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
                 TrailerList = response.body().getResults();
+                if (TrailerList.isEmpty()) {
+                    mNoReview.setVisibility(View.VISIBLE);
+                }
                 mTrailerAdapter = new TrailerAdapter(TrailerList, getApplicationContext(), poster);
                 recyclerView.setAdapter(mTrailerAdapter);
 
@@ -281,6 +301,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         Picasso.with(this).load(poster).into(Imageshown);
         Picasso.with(this).load(backdrop).into(DetailPortrait);
+
     }
 
     private void Delete() {
@@ -368,6 +389,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 //        }
         switch (v.getId()) {
             case R.id.DetailsaveButton:
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, title);
+
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 MovieExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {

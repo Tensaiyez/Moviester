@@ -1,9 +1,16 @@
 package com.example.tensaiye.popularmovie;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.example.tensaiye.popularmovie.Activity.DetailActivity;
+import com.example.tensaiye.popularmovie.Activity.MainActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Implementation of App Widget functionality.
@@ -16,7 +23,12 @@ public class MovieAppWidget extends AppWidgetProvider {
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.movie_app_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        Intent intent=new Intent(context, DetailActivity.class);
+        PendingIntent pendingIntent =   PendingIntent.getActivity(context,0,intent,0);
+        views.setOnClickPendingIntent(R.id.appwidget_text,pendingIntent);
+        String name = context.getSharedPreferences("MovieName",MODE_PRIVATE).getString("name","no movies");
+
+        views.setTextViewText(R.id.appwidget_text, name);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

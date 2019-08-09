@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         } else {
             movies = savedInstanceState.getParcelableArrayList(Constants.MOVIEBUNDLE);
+
         }
         mDb = MovieDatabase.getInstance(getApplicationContext());
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 return true;
             }
         });
-        defaults();
+//        defaults();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
     }
@@ -226,10 +227,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 public void defaults(){
-    SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
-
-    myToolbar.setBackgroundColor( sharedPreferences.getInt("red_theme", ContextCompat.getColor(this,R.color.red)));
-    sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+//    SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+//
+//    myToolbar.setBackgroundColor( sharedPreferences.getInt("red_theme", ContextCompat.getColor(this,R.color.red)));
+//    sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 //    if (Build.VERSION.SDK_INT >= 21) {
 //        getWindow().setNavigationBarColor(ContextCompat.getColor(this,R.color.grey));
 //        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.red_200));
@@ -244,8 +245,8 @@ public void defaults(){
     protected void onDestroy() {
 
         super.onDestroy();
-        PreferenceManager.getDefaultSharedPreferences(this)
-                .unregisterOnSharedPreferenceChangeListener(this);
+//        PreferenceManager.getDefaultSharedPreferences(this)
+//                .unregisterOnSharedPreferenceChangeListener(this);
     }
     public void FetchFromTMDBTwo(String sort) {
         RetrofitService retrofitService = new RetrofitService();
@@ -366,9 +367,9 @@ public void defaults(){
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.redTheme))) {
-            myToolbar.setBackgroundColor(sharedPreferences.getInt("red_theme", ContextCompat.getColor(this, R.color.red)));
-        }
+//        if (key.equals(getString(R.string.redTheme))) {
+//            myToolbar.setBackgroundColor(sharedPreferences.getInt("red_theme", ContextCompat.getColor(this, R.color.red)));
+//        }
     }
 }
 

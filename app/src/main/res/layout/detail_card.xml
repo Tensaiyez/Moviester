@@ -205,7 +205,17 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
+                <TextView
+                    android:id="@+id/NoTrailer_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="3dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="20dp"
+                    android:text="There are currently no trailers available!"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/Trailer_rv"
                     android:layout_width="wrap_content"
