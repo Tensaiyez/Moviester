@@ -37,23 +37,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             mPoster=itemView.findViewById(R.id.favorite_image);
             mRating=itemView.findViewById(R.id.Favorite_rating);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra("id",movies.get(position).getId());
-                    intent.putExtra("original_name", movies.get(position).getOriginalName());
-                    intent.putExtra("release_date", movies.get(position).getReleaseDate());
-                    intent.putExtra("poster_image", movies.get(position).getPosterImage());
-                    intent.putExtra("overview", movies.get(position).getOverView());
-                    intent.putExtra("user_rating", movies.get(position).getUserRating());
-                    intent.putExtra("backdrop_path",movies.get(position).getBackdrop());
-                    intent.putExtra("vote_count",movies.get(position).getVote());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-            });
+
 
 
         }

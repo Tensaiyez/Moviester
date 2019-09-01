@@ -63,7 +63,6 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@android:color/white"
-                    android:clipToPadding="true"
                     android:visibility="visible"
                     app:cardCornerRadius="18dp">
 
@@ -72,7 +71,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:padding="5dp"
                         android:text="@string/popular"
                         android:fontFamily="@font/proxima_nova_regular"
                         android:textColor="@color/black"
@@ -100,7 +98,6 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@android:color/white"
-                    android:clipToPadding="true"
                     android:visibility="visible"
                     app:cardCornerRadius="18dp">
 
@@ -109,7 +106,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:padding="5dp"
                         android:text="@string/top_rated"
                         android:fontFamily="@font/proxima_nova_regular"
 
@@ -137,7 +133,6 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@android:color/white"
-                    android:clipToPadding="true"
                     android:visibility="visible"
                     app:cardCornerRadius="18dp">
 
@@ -146,7 +141,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:padding="5dp"
                         android:text="Upcoming"
                         android:fontFamily="@font/proxima_nova_regular"
                         android:textColor="@color/black"

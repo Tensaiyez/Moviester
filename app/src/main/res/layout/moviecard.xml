@@ -25,8 +25,8 @@
 
         <ImageView
             android:id="@+id/list_movie_image"
-            android:layout_width="110dp"
-            android:layout_height="155dp"
+            android:layout_width="120dp"
+            android:layout_height="165dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="start|center_vertical"
             android:adjustViewBounds="true"
