@@ -14,6 +14,8 @@ import java.util.List;
 public interface FavoriteDao {
     @Query("SELECT * FROM favorite")
     LiveData<List<FavoriteEntry>>loadAllFavorite();
+    @Query("SELECT * FROM favorite")
+    List<FavoriteEntry>getAllFavorite();
 
     @Query("DELETE FROM favorite WHERE movie_id=:Favid")
     public void deleteFavorite(String Favid);

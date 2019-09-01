@@ -1,6 +1,7 @@
 package com.example.tensaiye.popularmovie.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tensaiye.popularmovie.R;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,10 +31,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class AuthActivity extends AppCompatActivity {
 
-static  final int GOOGLE_SIGN=123;
+    static final int GOOGLE_SIGN = 123;
     private FirebaseAuth mAuth;
-    Button signIn,signOut;
-    TextView text,logo;
+    Button signIn, signOut, continue_btn;
+    TextView text, logo, emailAuth,emailText;
     ImageView image;
     ProgressBar progressBar;
     GoogleSignInClient googleSignInClient;
@@ -42,33 +44,50 @@ static  final int GOOGLE_SIGN=123;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        signIn=findViewById(R.id.login);
-        signOut=findViewById(R.id.logout);
-        logo=findViewById(R.id.Logo);
-        text=findViewById(R.id.text);
-        progressBar=findViewById(R.id.progress_circular);
+        signIn = findViewById(R.id.login);
+        signOut = findViewById(R.id.logout);
+        continue_btn = findViewById(R.id.Continue);
 
+        text = findViewById(R.id.text);
+        progressBar = findViewById(R.id.progress_circular);
+        emailAuth = findViewById(R.id.Email);
+        emailText=findViewById(R.id.emailText);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.RED,
+                android.graphics.PorterDuff.Mode.MULTIPLY);
         mAuth = FirebaseAuth.getInstance();
 
-        GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
                 .Builder()
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        googleSignInClient= GoogleSignIn.getClient(this,googleSignInOptions);
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
         signIn.setOnClickListener(press -> SignInGoogle());
         signOut.setOnClickListener(press -> signOut());
+        continue_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent MovieIntent = new Intent(AuthActivity.this, MainActivity.class);
+                AuthActivity.this.startActivity(MovieIntent);
+            }
+        });
 
-        if(mAuth.getCurrentUser()!=null){
-            FirebaseUser user=mAuth.getCurrentUser();
+        if (mAuth.getCurrentUser() != null) {
+            FirebaseUser user = mAuth.getCurrentUser();
             updateUI(user);
         }
 
     }
-   private void SignInGoogle(){
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    private void SignInGoogle() {
         progressBar.setVisibility(View.VISIBLE);
-        Intent intentSign=googleSignInClient.getSignInIntent();
-        startActivityForResult(intentSign,GOOGLE_SIGN);
+        Intent intentSign = googleSignInClient.getSignInIntent();
+        startActivityForResult(intentSign, GOOGLE_SIGN);
     }
 
     @Override
@@ -86,7 +105,7 @@ static  final int GOOGLE_SIGN=123;
                 // ...
             }
         }
-}
+    }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         Log.d("TAG", "firebaseAuthWithGoogle:" + account.getId());
@@ -100,7 +119,8 @@ static  final int GOOGLE_SIGN=123;
                             progressBar.setVisibility(View.INVISIBLE);
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            Intent MovieIntent = new Intent(AuthActivity.this, MainActivity.class);
+                            AuthActivity.this.startActivity(MovieIntent);
 
                         } else {
                             progressBar.setVisibility(View.INVISIBLE);
@@ -115,25 +135,30 @@ static  final int GOOGLE_SIGN=123;
     }
 
     private void updateUI(FirebaseUser user) {
-        if(user!=null) {
+        if (user != null) {
             String name = user.getDisplayName();
-            String emai = user.getEmail();
-            text.append("Info: \n");
-            text.append(name + "\n");
-            text.append(emai);
+            String email = user.getEmail();
 
+            emailAuth.setText(email);
+
+            emailAuth.setVisibility(View.VISIBLE);
+            emailText.setVisibility(View.VISIBLE);
             signIn.setVisibility(View.INVISIBLE);
             signOut.setVisibility(View.VISIBLE);
-        }
-        else {
+            continue_btn.setVisibility(View.VISIBLE);
+        } else {
             signIn.setVisibility(View.VISIBLE);
             signOut.setVisibility(View.INVISIBLE);
+            emailAuth.setVisibility(View.INVISIBLE);
+            emailText.setVisibility(View.INVISIBLE);
+            continue_btn.setVisibility(View.INVISIBLE);
 
         }
 
     }
-    private void signOut(){
+
+    private void signOut() {
         FirebaseAuth.getInstance().signOut();
-        googleSignInClient.signOut().addOnCompleteListener(this, task ->updateUI(null) );
+        googleSignInClient.signOut().addOnCompleteListener(this, task -> updateUI(null));
     }
 }

@@ -1,30 +1,43 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    android:padding="@dimen/widget_margin">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/MovieWidget_iv"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:layout_margin="10dp"
-        android:background="@color/white"
-        android:layout_gravity="start"/>
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
-        android:background="@color/black"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:text="@string/popular"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <ListView
+        android:id="@+id/widgetStackView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:loopViews="true">
+    </ListView>
+<!--<ImageView-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:id="@+id/widget_image"/>-->
+    <TextView
+        android:id="@+id/EmptyStack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Please Select a Movie"
+        android:textColor="@android:color/white" />
+
 </FrameLayout>
-</RelativeLayout>
+</LinearLayout>

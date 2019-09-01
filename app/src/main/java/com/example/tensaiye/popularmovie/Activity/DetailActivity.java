@@ -91,8 +91,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private boolean isFavorite = false;
     private boolean isfav = true;
 
-    SharedPreferences sharedPreferences2;
-    SharedPreferences.Editor editor;
+//    SharedPreferences sharedPreferences2;
+//    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,11 +108,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         mFavoriteAdapter = new FavoriteAdapter(FavoriteList, this,MovieList);
         recyclerView2.setAdapter(mFavoriteAdapter);
 
-        sharedPreferences2 = getSharedPreferences("MovieName", Context.MODE_PRIVATE);
-        editor = sharedPreferences2.edit();
-        editor.putString("name", "dsvsvsvsdv");
-        editor.commit();
-
+//        sharedPreferences2 = getSharedPreferences("MovieName", Context.MODE_PRIVATE);
+//        editor = sharedPreferences2.edit();
+//        editor.putString("name","hi");
+//        editor.commit();
+//
+//Log.d("hi","the size"+MovieList.size());
         Toolbar mtoolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -184,7 +185,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             mDb = MovieDatabase.getInstance(getApplicationContext());
 
             collapsingToolbarLayout.setTitle(title);
-            final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/delilafreebold.ttf");
+            final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/proxima_nova_bold.otf");
             collapsingToolbarLayout.setCollapsedTitleTypeface(tf);
             collapsingToolbarLayout.setExpandedTitleTypeface(tf);
             initializeFavoriteButton(id);

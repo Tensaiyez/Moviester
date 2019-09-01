@@ -39,21 +39,26 @@ import com.example.tensaiye.popularmovie.Models.Basicmovie;
 import com.example.tensaiye.popularmovie.Constants;
 import com.example.tensaiye.popularmovie.Database.FavoriteEntry;
 import com.example.tensaiye.popularmovie.Database.MovieDatabase;
+import com.example.tensaiye.popularmovie.MovieService;
 import com.example.tensaiye.popularmovie.ViewModel.MainViewModel;
 import com.example.tensaiye.popularmovie.Models.Movie;
 import com.example.tensaiye.popularmovie.R;
 import com.example.tensaiye.popularmovie.Models.Review;
 import com.facebook.stetho.Stetho;
+import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -72,14 +77,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     BottomNavigationView bottomNavigationView;
 
     NestedScrollView nestedScrollView;
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
+    private List<String> movieTitle = new ArrayList<>();
+    private List<String> movieImage = new ArrayList<>();
+    private List<String> movieRating = new ArrayList<>();
+
     private List<Review> reviewList;
     private MovieDatabase mDb;
     private int SpamCount = 2;
     int gridOrientation = GridLayoutManager.HORIZONTAL;
     private String RETREIVE = "retreive";
-
-
+    SharedPreferences sharedPreferences2;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         cardView2 = findViewById(R.id.title_main2_cv);
         Highest_tv = MainActivity.this.findViewById(R.id.HighestTitle);
         Upcoming_tv = MainActivity.this.findViewById(R.id.UpcomingTitle);
+
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -190,10 +200,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 gridOrientation = GridLayoutManager.VERTICAL;
                 SpamCount = 3;
                 return true;
-            case R.id.ThemeSetting:
-                Intent startSettingActivity= new Intent(this,SettingActivity.class);
-                startActivity(startSettingActivity);
 
+            case R.id.Logout:
+                Intent AuthActivity = new Intent(this, AuthActivity.class);
+                startActivity(AuthActivity);
 
                 return true;
             default:
@@ -201,6 +211,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 
     public void FetchFromTMDBOne(String sort) {
 
@@ -212,6 +226,24 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onResponse(Call<Basicmovie> call, Response<Basicmovie> response) {
                 recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, SpamCount, gridOrientation, false));
                 movies = response.body().getResults();
+                sharedPreferences2 = getSharedPreferences("MovieName", Context.MODE_PRIVATE);
+                editor = sharedPreferences2.edit();
+
+                for (int i = 0; i <  movies.size()-1; i++) {
+                    movieTitle.add(movies.get(i).getOriginalName());
+                    movieImage.add(movies.get(i).getBackdrop());
+                    movieRating.add(movies.get(i).getUserRating());
+
+                    Log.d("title", " " + movieTitle.get(i));
+                    Log.d("image", " " + movieImage.get(i));
+                }
+
+                for (int i = 0; i < movies.size()-1; i++) {
+                    editor.putString("Movie" + i, movieTitle.get(i));
+                    editor.putString("Image" + i, movieImage.get(i));
+                    editor.putString("Rating"+i,movieRating.get(i));
+                }
+                editor.apply();
                 mAdapter = new MovieAdapter(movies, R.layout.moviecard, getApplicationContext());
                 recyclerView.setAdapter(mAdapter);
 
@@ -226,7 +258,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
 
     }
-public void defaults(){
+
+    public void defaults() {
 //    SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 //
 //    myToolbar.setBackgroundColor( sharedPreferences.getInt("red_theme", ContextCompat.getColor(this,R.color.red)));
@@ -240,7 +273,8 @@ public void defaults(){
 //    myToolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
 //    Toolbar_tv.setTextColor(ContextCompat.getColor(this,R.color.white));
 
-  }
+    }
+
     @Override
     protected void onDestroy() {
 
@@ -248,6 +282,7 @@ public void defaults(){
 //        PreferenceManager.getDefaultSharedPreferences(this)
 //                .unregisterOnSharedPreferenceChangeListener(this);
     }
+
     public void FetchFromTMDBTwo(String sort) {
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);

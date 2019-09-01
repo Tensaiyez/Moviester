@@ -63,9 +63,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
+                    android:layout_below="@id/Favorite_Title"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold"/>
 
 
@@ -73,8 +74,9 @@
                     android:id="@+id/star"
                     android:layout_width="36dp"
                     android:layout_height="25dp"
+                    android:layout_below="@id/Favorite_Title"
                    android:layout_toEndOf="@+id/Favorite_rating"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/ic_stars_black_24dp" />
             </RelativeLayout>
 

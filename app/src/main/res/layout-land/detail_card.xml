@@ -46,9 +46,10 @@
                     android:id="@+id/Original_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_gravity="start"
+
                     android:layout_marginStart="55dp"
+                    android:fontFamily="@font/proxima_nova_bold"
                     android:gravity="start"
                     android:padding="10dp"
                     android:text="Title"
@@ -73,6 +74,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="75dp"
                     android:layout_marginTop="75dp"
+                    android:fontFamily="@font/proxima_nova_regular"
                     android:paddingStart="3dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -87,6 +89,7 @@
                     android:layout_marginStart="75dp"
                     android:layout_marginTop="100dp"
                     android:text="Votes:"
+                    android:fontFamily="@font/proxima_nova_regular"
                     android:textColor="@color/grey"
                     android:textSize="12sp" />
 
@@ -97,7 +100,9 @@
                     android:layout_marginTop="100dp"
                     android:layout_toEndOf="@+id/vote_text"
                     android:textColor="@color/grey"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:fontFamily="@font/proxima_nova_regular"
+                    />
 
 
                 <TextView
@@ -110,6 +115,8 @@
                     android:layout_marginTop="150dp"
                     android:layout_toEndOf="@+id/star"
                     android:text="@string/detail_release_date"
+                    android:fontFamily="@font/proxima_nova_regular"
+
                     android:textColor="@color/grey"
                     android:textSize="12sp" />
 
@@ -123,7 +130,9 @@
                     android:layout_toEndOf="@+id/date_text"
                     android:textColor="@color/black"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/proxima_nova_regular"
+                    />
 
                 <ImageView
                     android:id="@+id/calandericon"
@@ -156,6 +165,8 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="@string/detail_overview"
+                android:fontFamily="@font/proxima_nova_bold"
+
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -166,7 +177,9 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:fontFamily="@font/proxima_nova_regular"
+                />
 
 
             <TextView
@@ -174,6 +187,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
                 android:text="The Cast:"
+                android:fontFamily="@font/proxima_nova_bold"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -193,7 +207,9 @@
                 android:text="@string/trailer"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/proxima_nova_bold"
+                />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/Trailer_rv"
@@ -218,7 +234,9 @@
                     android:text="@string/review"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/proxima_nova_bold"
+                    />
             </LinearLayout>
 
             <TextView
@@ -229,7 +247,9 @@
                 android:paddingTop="3dp"
                 android:paddingEnd="10dp"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:fontFamily="@font/proxima_nova_regular"
+                />
 
             <TextView
                 android:id="@+id/NoReview_tv"
@@ -238,6 +258,7 @@
                 android:paddingStart="3dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="20dp"
+                android:fontFamily="@font/proxima_nova_regular"
                 android:text="There are currently no review available!"
                 android:textColor="@color/black"
                 android:textSize="16sp"

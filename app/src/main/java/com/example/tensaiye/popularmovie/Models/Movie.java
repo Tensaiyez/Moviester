@@ -5,8 +5,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class Movie implements Parcelable {
+
+public class Movie implements Parcelable, Serializable {
     public static final String movieImagepath = "http://image.tmdb.org/t/p/original/";
 
     @SerializedName("original_title")

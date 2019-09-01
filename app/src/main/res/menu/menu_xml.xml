@@ -30,6 +30,7 @@
                 android:title="Upcoming"/>
 
 
+
         </menu>
     </item>
     <item
@@ -38,10 +39,9 @@
         android:title="Setting"
         app:showAsAction="always" >
         <menu>
-            <item android:id="@+id/ThemeSetting"
-                android:title="Theme"
-
-                />
+            <item
+                android:id="@+id/Logout"
+                android:title="Profile"/>
         </menu>
     </item>
     <!--app:actionViewClass="android.widget.Spinner" />-->

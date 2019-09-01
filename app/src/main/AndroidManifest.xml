@@ -35,7 +35,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/movie_app_widget_info" />
         </receiver>
-
+        <service android:name=".MovieService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            />
         <activity
             android:name=".Activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
