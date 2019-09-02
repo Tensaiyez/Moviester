@@ -122,6 +122,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 //            }
             progressBar.setVisibility(View.INVISIBLE);
             new AsyncTaskFetch().execute();
+             if (!isOnline()) {
+                 
+                Toast.makeText(MainActivity.this, "No Internet Connection...Please Connect To The Internet", Toast.LENGTH_SHORT).show();
+            }
 
         } else {
             movies = savedInstanceState.getParcelableArrayList(Constants.MOVIEBUNDLE);
@@ -162,9 +166,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 FetchFromTMDBTwo(Constants.TopRated);
                 FetchFromTMDBThree(Constants.Upcoming);
             }
-            else if (!isOnline()) {
-                Toast.makeText(MainActivity.this, "No Internet Connection...Please Connect To The Internet", Toast.LENGTH_SHORT).show();
-            }
+
             return null;
         }
         @Override

@@ -44,12 +44,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="bottom|center_horizontal"
-                android:background="@drawable/scrim"
                 android:gravity="bottom|center_horizontal"
                 android:padding="10dp"
                 android:paddingStart="100dp"
                 android:paddingEnd="100dp"
-                android:paddingBottom="10dp" />
+                android:background="@drawable/scrim"
+                />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/detail_toolbar"

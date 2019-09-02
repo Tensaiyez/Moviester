@@ -310,7 +310,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         Picasso.with(this).load(backdrop).into(DetailPortrait);
 
-        GlideApp.with(this).asBitmap().load(poster).override(500,300).listener(new RequestListener<Bitmap>() {
+        GlideApp.with(this).asBitmap().load(poster).override(500,270).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 return false;
