@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
 
 
     <android.support.v4.widget.NestedScrollView
@@ -85,7 +86,7 @@
                         android:layout_marginStart="25dp"
                         android:layout_marginTop="35dp"
                         android:paddingStart="3dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:fontFamily="@font/proxima_nova_regular"
@@ -143,7 +144,7 @@
                         android:fontFamily="@font/proxima_nova_regular"
 
                         android:layout_toEndOf="@+id/date_text"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
@@ -180,7 +181,7 @@
                     android:fontFamily="@font/proxima_nova_bold"
 
                     android:text="@string/detail_overview"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -191,7 +192,7 @@
                     android:padding="5dp"
                     android:fontFamily="@font/proxima_nova_regular"
 
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
 
@@ -202,7 +203,7 @@
                     android:text="The Cast:"
                     android:fontFamily="@font/proxima_nova_bold"
 
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -221,7 +222,7 @@
                     android:text="@string/trailer"
                     android:fontFamily="@font/proxima_nova_bold"
 
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
@@ -233,7 +234,7 @@
                     android:paddingEnd="10dp"
                     android:paddingBottom="20dp"
                     android:text="There are currently no trailers available!"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:visibility="gone" />
                 <android.support.v7.widget.RecyclerView
@@ -251,7 +252,7 @@
                     android:paddingBottom="3dp"
                     android:text="@string/review"
                     android:fontFamily="@font/proxima_nova_bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -264,7 +265,7 @@
                     android:paddingTop="3dp"
                     android:fontFamily="@font/proxima_nova_regular"
                     android:paddingEnd="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -276,7 +277,7 @@
                     android:paddingBottom="20dp"
                     android:fontFamily="@font/proxima_nova_regular"
                     android:text="There are currently no review available!"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:visibility="gone" />
 

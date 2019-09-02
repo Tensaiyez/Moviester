@@ -44,6 +44,16 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
+        <ProgressBar
+            android:id="@+id/progress_circular_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:outlineAmbientShadowColor="@color/red"
+            android:outlineSpotShadowColor="@color/red"
+            android:visibility="invisible"
+            android:layout_marginTop="250dp"
+            app:layout_anchor="@+id/nested"
+            app:layout_anchorGravity="top|center" />
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested"
             android:layout_width="match_parent"

@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -24,12 +26,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 //import com.android.support:design:28.0.0;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.tensaiye.popularmovie.API.RetrofitService;
 import com.example.tensaiye.popularmovie.API.ServiceInterface;
 import com.example.tensaiye.popularmovie.Adapters.CastAdapter;
 import com.example.tensaiye.popularmovie.Adapters.FavoriteAdapter;
 import com.example.tensaiye.popularmovie.Adapters.ReviewAdapter;
 import com.example.tensaiye.popularmovie.Adapters.TrailerAdapter;
+import com.example.tensaiye.popularmovie.GlideApp;
 import com.example.tensaiye.popularmovie.Models.BasicCredit;
 import com.example.tensaiye.popularmovie.Models.BasicReview;
 import com.example.tensaiye.popularmovie.Models.BasicTrailer;
@@ -90,6 +97,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private boolean isFavorite = false;
     private boolean isfav = true;
+    private int mMutedColor = 0xFF333333;
 
 //    SharedPreferences sharedPreferences2;
 //    SharedPreferences.Editor editor;
@@ -300,8 +308,27 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         mReleaseDate.setText(releaseDate);
         mVote.setText(vote);
 
-        Picasso.with(this).load(poster).into(Imageshown);
         Picasso.with(this).load(backdrop).into(DetailPortrait);
+
+        GlideApp.with(this).asBitmap().load(poster).override(500,300).listener(new RequestListener<Bitmap>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
+                    @Override
+                    public void onGenerated(@Nullable Palette palette) {
+                        mMutedColor=palette.getMutedColor(0xFF333333);
+                        collapsingToolbarLayout.setBackgroundColor(mMutedColor);
+                        collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(mMutedColor));
+                        collapsingToolbarLayout.setContentScrimColor(palette.getDominantColor(mMutedColor));                    }
+                });
+                return false;
+            }
+        }).into(Imageshown);
 
     }
 

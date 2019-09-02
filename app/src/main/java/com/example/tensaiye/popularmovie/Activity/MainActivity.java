@@ -6,18 +6,15 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,19 +37,14 @@ import com.example.tensaiye.popularmovie.Models.Basicmovie;
 import com.example.tensaiye.popularmovie.Constants;
 import com.example.tensaiye.popularmovie.Database.FavoriteEntry;
 import com.example.tensaiye.popularmovie.Database.MovieDatabase;
-import com.example.tensaiye.popularmovie.MovieService;
 import com.example.tensaiye.popularmovie.ViewModel.MainViewModel;
 import com.example.tensaiye.popularmovie.Models.Movie;
 import com.example.tensaiye.popularmovie.R;
 import com.example.tensaiye.popularmovie.Models.Review;
 import com.facebook.stetho.Stetho;
-import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     TextView Highest_tv;
     TextView Upcoming_tv;
     Toolbar myToolbar;
+    ProgressBar progressBar;
     BottomNavigationView bottomNavigationView;
 
     NestedScrollView nestedScrollView;
@@ -111,21 +105,23 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         Highest_tv = MainActivity.this.findViewById(R.id.HighestTitle);
         Upcoming_tv = MainActivity.this.findViewById(R.id.UpcomingTitle);
 
+        progressBar = findViewById(R.id.progress_circular_main);
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         if (savedInstanceState == null || !savedInstanceState.containsKey(Constants.MOVIEBUNDLE)) {
-            if (isOnline()) {
-                FetchFromTMDBOne(Constants.Popular);
-                FetchFromTMDBTwo(Constants.TopRated);
-                FetchFromTMDBThree(Constants.Upcoming);
-
-
-            } else if (!isOnline()) {
-                Toast.makeText(this, "No Internet Connection...Please Connect To The Internet", Toast.LENGTH_SHORT).show();
-            }
-
+//            if (isOnline()) {
+//                FetchFromTMDBOne(Constants.Popular);
+//                FetchFromTMDBTwo(Constants.TopRated);
+//                FetchFromTMDBThree(Constants.Upcoming);
+//
+//
+//            } else if (!isOnline()) {
+//                Toast.makeText(this, "No Internet Connection...Please Connect To The Internet", Toast.LENGTH_SHORT).show();
+//            }
+            progressBar.setVisibility(View.INVISIBLE);
+            new AsyncTaskFetch().execute();
 
         } else {
             movies = savedInstanceState.getParcelableArrayList(Constants.MOVIEBUNDLE);
@@ -147,8 +143,35 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 return true;
             }
         });
+
 //        defaults();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+    }
+    private class AsyncTaskFetch extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if (isOnline()) {
+                FetchFromTMDBOne(Constants.Popular);
+                FetchFromTMDBTwo(Constants.TopRated);
+                FetchFromTMDBThree(Constants.Upcoming);
+            }
+            else if (!isOnline()) {
+                Toast.makeText(MainActivity.this, "No Internet Connection...Please Connect To The Internet", Toast.LENGTH_SHORT).show();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void  s) {
+            super.onPostExecute(s);
+            progressBar.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -313,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
         Call<Basicmovie> call = serviceInterface.getMovies(sort, Constants.API_KEY);
+
         call.enqueue(new Callback<Basicmovie>() {
             @Override
             public void onResponse(Call<Basicmovie> call, Response<Basicmovie> response) {
