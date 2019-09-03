@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 //import com.android.support:design:28.0.0;
+import com.andrognito.flashbar.Flashbar;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -112,16 +113,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         final RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.Favorite_rv);
         recyclerView2.setLayoutManager(new LinearLayoutManager(DetailActivity.this));
         collapsingToolbarLayout = (net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.AppBar);
+
         mFavoriteAdapter = new FavoriteAdapter(FavoriteList, this,MovieList);
         recyclerView2.setAdapter(mFavoriteAdapter);
 
-//        sharedPreferences2 = getSharedPreferences("MovieName", Context.MODE_PRIVATE);
-//        editor = sharedPreferences2.edit();
-//        editor.putString("name","hi");
-//        editor.commit();
-//
-//Log.d("hi","the size"+MovieList.size());
+
         Toolbar mtoolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -132,31 +128,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
             }
         });
-
-
-
-
-//          The following code allows the collapsingtoolbar title to be set only after it is collapsed. Reference:https://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed/32724422
-
-//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            boolean check = false;
-//            int Range = -1;
-//
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-//                if (Range == -1) {
-//                    Range = appBarLayout.getTotalScrollRange();
-//                }
-//                if (Range + i == 0) {
-//                    collapsingToolbarLayout.setTitle("     " + title);
-//                    check = true;
-//                } else if (check) {
-//                    collapsingToolbarLayout.setTitle(" ");
-//                    check = false;
-//                }
-//            }
-//        });
-
 
         mNoReview = (TextView) findViewById(R.id.NoReview_tv);
         mNoTrailer=(TextView) findViewById(R.id.NoTrailer_tv);
@@ -176,8 +147,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 backdrop = intent.getStringExtra("poster_image");
                 vote=intent.getStringExtra("vote_count");
 
-
-
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 FetchReviews(id);
@@ -191,7 +160,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
             }
             mDb = MovieDatabase.getInstance(getApplicationContext());
-
             collapsingToolbarLayout.setTitle(title);
             final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/proxima_nova_bold.otf");
             collapsingToolbarLayout.setCollapsedTitleTypeface(tf);
@@ -205,9 +173,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
 
     public void SaveFavorite() {
-//        String title= movies.getOriginalName();
-//        String id=movies.getId();
-//        String poster=movies.getPosterImage();
+
         final FavoriteEntry favoriteEntry = new FavoriteEntry(title, id, backdrop,userRating);
         MovieExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -308,9 +274,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         mReleaseDate.setText(releaseDate);
         mVote.setText(vote);
 
-        Picasso.with(this).load(backdrop).into(DetailPortrait);
+        Picasso.with(this).load(poster).into(Imageshown);
 
-        GlideApp.with(this).asBitmap().load(poster).override(500,270).listener(new RequestListener<Bitmap>() {
+        GlideApp.with(this).asBitmap().load(backdrop).override(500,270).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 return false;
@@ -328,7 +294,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 });
                 return false;
             }
-        }).into(Imageshown);
+        }).into(DetailPortrait);
 
     }
 
@@ -389,6 +355,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 public void run() {
                     mButton.setColorFilter(Color.RED);
                     Snackbar.make(findViewById(R.id.coordinate), "Movie added to Favorites", Snackbar.LENGTH_LONG).show();
+
                 }
             });
 
@@ -399,22 +366,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-//        if (v.getId()==R.id.DetailsaveButton) {
-//            MovieExecutors.getInstance().diskIO().execute(new Runnable() {
-//                @Override
-//                public void run() {
-//                    favoriteButtonHandler(id);
-//
-//                    if(isfav){
-//                        mButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-//                    }else{
-//                        mButton.setImageResource(R.drawable.ic_favorite_black_24dp);
-//                    }
-//
-//                    isfav = !isfav; // reverse
-//                }
-//            });
-//        }
+
         switch (v.getId()) {
             case R.id.DetailsaveButton:
                 Bundle bundle = new Bundle();
