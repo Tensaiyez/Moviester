@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -29,6 +31,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.example.tensaiye.popularmovie.API.RetrofitService;
 import com.example.tensaiye.popularmovie.API.ServiceInterface;
 import com.example.tensaiye.popularmovie.Adapters.FavoriteAdapter;
@@ -51,7 +54,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity  {
     BottomNavigationView bottomNavigationView;
 
     NestedScrollView nestedScrollView;
+    List<FavoriteEntry> favEntry = new ArrayList<>();
     private List<Movie> movies = new ArrayList<>();
     private List<String> movieTitle = new ArrayList<>();
     private List<String> movieImage = new ArrayList<>();
@@ -256,14 +260,16 @@ public class MainActivity extends AppCompatActivity  {
 
                 for (int i = 0; i <  movies.size()-1; i++) {
                     movieTitle.add(movies.get(i).getOriginalName());
-
+                    movieImage.add(movies.get(i).getBackdrop());
                     movieRating.add(movies.get(i).getUserRating());
-                    Log.d("title", " " + movieTitle.get(i));
 
+                    Log.d("title", " " + movieTitle.get(i));
+                    Log.d("image", " " + movieImage.get(i));
                 }
 
                 for (int i = 0; i < movies.size()-1; i++) {
                     editor.putString("Movie" + i, movieTitle.get(i));
+                    editor.putString("Image" + i, movieImage.get(i));
                     editor.putString("Rating"+i,movieRating.get(i));
                 }
                 editor.apply();
@@ -282,6 +288,29 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    public void defaults() {
+//    SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+//
+//    myToolbar.setBackgroundColor( sharedPreferences.getInt("red_theme", ContextCompat.getColor(this,R.color.red)));
+//    sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+//    if (Build.VERSION.SDK_INT >= 21) {
+//        getWindow().setNavigationBarColor(ContextCompat.getColor(this,R.color.grey));
+//        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.red_200));
+//    }
+//    bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
+//    bottomNavigationView.setItemBackgroundResource(R.color.red);
+//    myToolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
+//    Toolbar_tv.setTextColor(ContextCompat.getColor(this,R.color.white));
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+//        PreferenceManager.getDefaultSharedPreferences(this)
+//                .unregisterOnSharedPreferenceChangeListener(this);
+    }
 
     public void FetchFromTMDBTwo(String sort) {
         RetrofitService retrofitService = new RetrofitService();
@@ -321,14 +350,19 @@ public class MainActivity extends AppCompatActivity  {
                 movies = response.body().getResults();
                 mAdapter = new MovieAdapter(movies, R.layout.moviecard, getApplicationContext());
                 recyclerView3.setAdapter(mAdapter);
+
             }
+
+
             @Override
             public void onFailure(Call<Basicmovie> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
 
+
     }
+
     public void DisplayHome() {
 
         FetchFromTMDBOne(Constants.Popular);
@@ -347,7 +381,9 @@ public class MainActivity extends AppCompatActivity  {
         cardView2.setVisibility(View.VISIBLE);
         gridOrientation = GridLayoutManager.HORIZONTAL;
         SpamCount = 2;
+
     }
+
     public void DisplayFavorites() {
         FetchFromDatabase();
         popular_tv.setVisibility(View.GONE);
@@ -362,12 +398,15 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void FetchFromDatabase() {
-        List<FavoriteEntry> favEntry = new ArrayList<>();
+
         favoriteAdapter = new FavoriteAdapter(favEntry, getApplicationContext(), movies);
         setViewModel();
 
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(favoriteAdapter);
+
     }
 
     private void setViewModel() {
@@ -378,6 +417,18 @@ public class MainActivity extends AppCompatActivity  {
             public void onChanged(@Nullable List<FavoriteEntry> favoriteEntries) {
                 Log.d(TAG, "Updataing list of favorites from ViewModel ");
                 favoriteAdapter.setFavoriteList(favoriteEntries);
+                Log.d("favEntry3",favoriteEntries.size()+" ");
+
+                if(favoriteEntries.isEmpty()){
+//                    Snackbar snackbar=Snackbar.make(findViewById(R.id.main_layout), "Please add movies to your favorite library", Snackbar.LENGTH_LONG);
+                    TSnackbar snackbar= TSnackbar.make(findViewById(R.id.main_layout), "Please add movies to your favorite library", TSnackbar.LENGTH_SHORT);
+                    snackbar.setActionTextColor(Color.WHITE);
+
+                    snackbar.setIconLeft(R.drawable.ic_favorite_black_24dp,40);
+                    snackbar.setIconPadding(8);
+                    snackbar.show();
+
+                }
             }
         });
 
@@ -394,6 +445,12 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+//        if (key.equals(getString(R.string.redTheme))) {
+//            myToolbar.setBackgroundColor(sharedPreferences.getInt("red_theme", ContextCompat.getColor(this, R.color.red)));
+//        }
+    }
 }
 
 

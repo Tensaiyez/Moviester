@@ -23,7 +23,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     private List<FavoriteEntry> FavoriteList;
     private List<Movie>movies;
     private Context context;
-    private AdapterView.OnItemClickListener mItemClickListener;
+
     public class FavoriteViewHolder extends RecyclerView.ViewHolder{
 
         public TextView mTitle;
