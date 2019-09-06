@@ -8,6 +8,7 @@
     android:background="@android:color/white"
     >
 
+
     <android.support.v7.widget.RecyclerView
 
         android:id="@+id/MovieListFav"

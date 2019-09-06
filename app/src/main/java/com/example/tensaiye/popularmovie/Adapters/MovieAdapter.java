@@ -51,32 +51,9 @@ private  int layoutID;
     public MovieViewHolder(View V){
         super(V);
         moviesLayout=(GridLayout) V.findViewById(R.id.movie_layout);
-
         imageView=(ImageView)V.findViewById(R.id.list_movie_image);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = getAdapterPosition();
-                Intent intent = new Intent(mContext, DetailActivity.class);
-
-                intent.putExtra("id",movies.get(position).getId());
-                intent.putExtra("original_name", movies.get(position).getOriginalName());
-                intent.putExtra("release_date", movies.get(position).getReleaseDate());
-                intent.putExtra("poster_image", movies.get(position).getPosterImage());
-                intent.putExtra("overview", movies.get(position).getOverView());
-                intent.putExtra("user_rating", movies.get(position).getUserRating());
-                intent.putExtra("backdrop_path",movies.get(position).getBackdrop());
-                intent.putExtra("vote_count",movies.get(position).getVote());
-               intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                mContext.startActivity(intent);
 
 
-
-
-
-            }
-        });
     }
     }
 public MovieAdapter(List<Movie>movies,int layoutID,Context context){
@@ -93,6 +70,32 @@ public MovieAdapter(List<Movie>movies,int layoutID,Context context){
 
     @Override
     public void onBindViewHolder(@NonNull final MovieAdapter.MovieViewHolder movieViewHolder, int i) {
+
+        movieViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(mContext, DetailActivity.class);
+
+                intent.putExtra("id",movies.get(i).getId());
+                intent.putExtra("original_name", movies.get(i).getOriginalName());
+                intent.putExtra("release_date", movies.get(i).getReleaseDate());
+                intent.putExtra("poster_image", movies.get(i).getPosterImage());
+                intent.putExtra("overview", movies.get(i).getOverView());
+                intent.putExtra("user_rating", movies.get(i).getUserRating());
+                intent.putExtra("backdrop_path",movies.get(i).getBackdrop());
+                intent.putExtra("vote_count",movies.get(i).getVote());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                movieViewHolder.imageView.setTransitionName("Transition");
+                Pair<View, String> pair1 = Pair.create((View) movieViewHolder.imageView, movieViewHolder.imageView.getTransitionName());
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, pair1);
+                mContext.startActivity(intent, optionsCompat.toBundle());
+
+
+            }
+        });
+
+
 //movieViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 //    @Override
 //    public void onClick(View v) {

@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:transitionName="Transition"
         android:background="@android:color/black"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">

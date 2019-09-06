@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         });
 
 //        defaults();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 
     }
     private class AsyncTaskFetch extends AsyncTask<Void, Void, Void> {
@@ -273,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     editor.putString("Rating"+i,movieRating.get(i));
                 }
                 editor.apply();
-                mAdapter = new MovieAdapter(movies, R.layout.moviecard, getApplicationContext());
+                mAdapter = new MovieAdapter(movies, R.layout.moviecard, MainActivity.this);
                 recyclerView.setAdapter(mAdapter);
 
             }
@@ -322,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 recyclerView2.setLayoutManager(new GridLayoutManager(MainActivity.this, SpamCount, GridLayoutManager.HORIZONTAL, false));
 
                 movies = response.body().getResults();
-                mAdapter = new MovieAdapter(movies, R.layout.moviecard, getApplicationContext());
+                mAdapter = new MovieAdapter(movies, R.layout.moviecard, MainActivity.this);
                 recyclerView2.setAdapter(mAdapter);
 
             }
@@ -348,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onResponse(Call<Basicmovie> call, Response<Basicmovie> response) {
                 recyclerView3.setLayoutManager(new GridLayoutManager(MainActivity.this, SpamCount, GridLayoutManager.HORIZONTAL, false));
                 movies = response.body().getResults();
-                mAdapter = new MovieAdapter(movies, R.layout.moviecard, getApplicationContext());
+                mAdapter = new MovieAdapter(movies, R.layout.moviecard, MainActivity.this);
                 recyclerView3.setAdapter(mAdapter);
 
             }
@@ -421,28 +422,31 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                 if(favoriteEntries.isEmpty()){
 //                    Snackbar snackbar=Snackbar.make(findViewById(R.id.main_layout), "Please add movies to your favorite library", Snackbar.LENGTH_LONG);
-                    TSnackbar snackbar= TSnackbar.make(findViewById(R.id.main_layout), "Please add movies to your favorite library", TSnackbar.LENGTH_SHORT);
+                    TSnackbar snackbar= TSnackbar.make(findViewById(R.id.main_layout), "Please add movies to your favorite library", TSnackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.WHITE);
+                    View snackbarView = snackbar.getView();
 
-                    snackbar.setIconLeft(R.drawable.ic_favorite_black_24dp,40);
+                    final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/proxima_nova_bold.otf");
+
+                    TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
+                    textView.setTextColor(Color.WHITE);
+                    textView.setTypeface(tf);
+                    snackbar.setIconLeft(R.drawable.ic_favorite_black_24dp,30);
                     snackbar.setIconPadding(8);
                     snackbar.show();
 
                 }
             }
         });
-
-
     }
-
     // The method below checks if the phone is connected to a network.
     //https://developer.android.com/training/monitoring-device-state/connectivity-monitoring#java This site has helped me find a way in which to check the Network Status of the app.
     public boolean isOnline() {
 
+
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkStatus = connectivityManager.getActiveNetworkInfo();
         return networkStatus != null;
-
     }
 
     @Override

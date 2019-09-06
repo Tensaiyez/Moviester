@@ -20,12 +20,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//import com.android.support:design:28.0.0;
 import com.andrognito.flashbar.Flashbar;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -52,18 +52,15 @@ import com.example.tensaiye.popularmovie.Models.Review;
 import com.example.tensaiye.popularmovie.Models.Trailer;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
-
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
+
     private FirebaseAnalytics mFirebaseAnalytics;
     private Movie movies;
     TextView mTitle;
@@ -83,11 +80,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     String poster;
     String id;
     String backdrop;
+
     private List<Review> reviewList = new ArrayList<>();
     private List<Trailer> TrailerList = new ArrayList<>();
     private List<FavoriteEntry> FavoriteList = new ArrayList<>();
     private List<Movie> MovieList = new ArrayList<>();
-    private List<Credit> CastList=new ArrayList<>();
+    private List<Credit> CastList = new ArrayList<>();
 
     private String Tag;
     private ReviewAdapter mReviewAdapter;
@@ -100,9 +98,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private boolean isfav = true;
     private int mMutedColor = 0xFF333333;
 
-//    SharedPreferences sharedPreferences2;
-//    SharedPreferences.Editor editor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,16 +109,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         recyclerView2.setLayoutManager(new LinearLayoutManager(DetailActivity.this));
         collapsingToolbarLayout = (net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.AppBar);
-        mFavoriteAdapter = new FavoriteAdapter(FavoriteList, this,MovieList);
+        mFavoriteAdapter = new FavoriteAdapter(FavoriteList, this, MovieList);
 
         recyclerView2.setAdapter(mFavoriteAdapter);
 
-//        sharedPreferences2 = getSharedPreferences("MovieName", Context.MODE_PRIVATE);
-//        editor = sharedPreferences2.edit();
-//        editor.putString("name","hi");
-//        editor.commit();
-//
-//Log.d("hi","the size"+MovieList.size());
+
         Toolbar mtoolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -136,32 +126,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         });
 
 
-
-
-//          The following code allows the collapsingtoolbar title to be set only after it is collapsed. Reference:https://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed/32724422
-
-//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            boolean check = false;
-//            int Range = -1;
-//
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-//                if (Range == -1) {
-//                    Range = appBarLayout.getTotalScrollRange();
-//                }
-//                if (Range + i == 0) {
-//                    collapsingToolbarLayout.setTitle("     " + title);
-//                    check = true;
-//                } else if (check) {
-//                    collapsingToolbarLayout.setTitle(" ");
-//                    check = false;
-//                }
-//            }
-//        });
-
-
         mNoReview = (TextView) findViewById(R.id.NoReview_tv);
-        mNoTrailer=(TextView) findViewById(R.id.NoTrailer_tv);
+        mNoTrailer = (TextView) findViewById(R.id.NoTrailer_tv);
         mButton = (FloatingActionButton) findViewById(R.id.DetailsaveButton);
 
 
@@ -176,9 +142,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 poster = intent.getStringExtra("backdrop_path");
                 id = intent.getStringExtra("id");
                 backdrop = intent.getStringExtra("poster_image");
-                vote=intent.getStringExtra("vote_count");
-
-
+                vote = intent.getStringExtra("vote_count");
 
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -189,48 +153,40 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
                 populateUI(movies);
 
-
-
             }
             mDb = MovieDatabase.getInstance(getApplicationContext());
 
             collapsingToolbarLayout.setTitle(title);
-            final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/proxima_nova_bold.otf");
+            final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/proxima_nova_bold.otf");
             collapsingToolbarLayout.setCollapsedTitleTypeface(tf);
             collapsingToolbarLayout.setExpandedTitleTypeface(tf);
             initializeFavoriteButton(id);
 
-
         }
-
     }
 
     public void SaveFavorite() {
-//        String title= movies.getOriginalName();
-//        String id=movies.getId();
-//        String poster=movies.getPosterImage();
-        final FavoriteEntry favoriteEntry = new FavoriteEntry(title, id, backdrop,userRating);
+
+        final FavoriteEntry favoriteEntry = new FavoriteEntry(title, id, backdrop, userRating);
         MovieExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 mDb.favoriteDao().insertFavorite(favoriteEntry);
-
-
             }
         });
-
     }
-    private void FetchCast(String movie_id){
+
+    private void FetchCast(String movie_id) {
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<BasicCredit> call=serviceInterface.getCredit(movie_id,Constants.API_KEY);
+        Call<BasicCredit> call = serviceInterface.getCredit(movie_id, Constants.API_KEY);
         call.enqueue(new Callback<BasicCredit>() {
             @Override
             public void onResponse(Call<BasicCredit> call, Response<BasicCredit> response) {
-                final RecyclerView recyclerView=(RecyclerView)findViewById(R.id.Cast_rv);
+                final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.Cast_rv);
                 recyclerView.setLayoutManager(new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                CastList=response.body().getCast();
-                mCastAdapter=new CastAdapter(CastList,getApplicationContext());
+                CastList = response.body().getCast();
+                mCastAdapter = new CastAdapter(CastList, getApplicationContext());
                 recyclerView.setAdapter(mCastAdapter);
             }
 
@@ -281,7 +237,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 mTrailerAdapter = new TrailerAdapter(TrailerList, getApplicationContext(), poster);
                 recyclerView.setAdapter(mTrailerAdapter);
-
             }
 
             @Override
@@ -293,16 +248,16 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     private void populateUI(Movie movie) {
 
-        ImageView Imageshown = findViewById(R.id.Poster_tv);
-        ImageView DetailPortrait = findViewById(R.id.detail_portrait);
+
 
         mTitle = (TextView) findViewById(R.id.Original_tv);
         mDescription = (TextView) findViewById(R.id.Overview_tv);
         mUserRating = (TextView) findViewById(R.id.Vote_tv);
         mReleaseDate = (TextView) findViewById(R.id.Release_tv);
         mReviewContent = (TextView) findViewById(R.id.Reviews_tv);
-        mVote=(TextView) findViewById(R.id.vote_count_tv);
-
+        mVote = (TextView) findViewById(R.id.vote_count_tv);
+        ImageView Imageshown = findViewById(R.id.Poster_tv);
+        ImageView DetailPortrait = findViewById(R.id.detail_portrait);
         mTitle.setText(title);
         mDescription.setText(overView);
         mUserRating.setText(userRating);
@@ -319,22 +274,25 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                startPostponedEnterTransition();
                 Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
                     @Override
                     public void onGenerated(@Nullable Palette palette) {
-                        mMutedColor=palette.getVibrantColor(0x000);
-                        collapsingToolbarLayout.setBackgroundColor(mMutedColor);
+                        mMutedColor = palette.getVibrantColor(0x212121);
+//                        collapsingToolbarLayout.setBackgroundColor(mMutedColor);
                         collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(mMutedColor));
-                        collapsingToolbarLayout.setContentScrimColor(palette.getDominantColor(mMutedColor));                    }
+                        collapsingToolbarLayout.setContentScrimColor(palette.getDominantColor(mMutedColor));
+                    }
                 });
                 return false;
             }
         }).into(DetailPortrait);
-
+        getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transition));
+        DetailPortrait.setTransitionName("Transition");
     }
 
     private void Delete() {
-        final FavoriteEntry favoriteEntry = new FavoriteEntry(title, id, backdrop,userRating);
+        final FavoriteEntry favoriteEntry = new FavoriteEntry(title, id, backdrop, userRating);
         mDb.favoriteDao().deleteFavorite(id);
     }
 
@@ -365,7 +323,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-
     private void favoriteButtonHandler(String movieId) {
         if (isFavorite) {
             Log.d(Tag, "deleting favorite");
@@ -376,28 +333,32 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     mButton.setColorFilter(Color.WHITE);
-                    Snackbar.make(findViewById(R.id.coordinate), "Movie deleted from Favorites", Snackbar.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinate), "Movie deleted from Favorites", Snackbar.LENGTH_LONG);
+                    View snackbarview = snackbar.getView();
+                    final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/proxima_nova_bold.otf");
+
+                    TextView tv = (TextView) (snackbarview).findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTypeface(tf);
+                    snackbar.show();
                 }
             });
-
-
         } else {
             SaveFavorite();
-
             isFavorite = true;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mButton.setColorFilter(Color.RED);
-                    Snackbar.make(findViewById(R.id.coordinate), "Movie added to Favorites", Snackbar.LENGTH_LONG).show();
-
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinate), "Movie added to Favorites", Snackbar.LENGTH_LONG);
+                    View snackbarview = snackbar.getView();
+                    final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/proxima_nova_bold.otf");
+                    TextView tv = (TextView) (snackbarview).findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTypeface(tf);
+                    snackbar.show();
                 }
             });
-
         }
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -416,7 +377,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 });
                 break;
-
         }
 
     }
