@@ -37,6 +37,8 @@ import com.example.tensaiye.popularmovie.API.RetrofitService;
 import com.example.tensaiye.popularmovie.API.ServiceInterface;
 import com.example.tensaiye.popularmovie.Adapters.FavoriteAdapter;
 import com.example.tensaiye.popularmovie.Adapters.MovieAdapter;
+
+import com.example.tensaiye.popularmovie.BuildConfig;
 import com.example.tensaiye.popularmovie.Models.Basicmovie;
 import com.example.tensaiye.popularmovie.Constants;
 import com.example.tensaiye.popularmovie.Database.FavoriteEntry;
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private String RETREIVE = "retreive";
     SharedPreferences sharedPreferences2;
     SharedPreferences.Editor editor;
-
+    String apiKey =BuildConfig.API_KEY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             new AsyncTaskFetch().execute();
              if (!isOnline()) {
 
-                Toast.makeText(MainActivity.this, "No Internet Connection...Please Connect To The Internet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, Constants.InternetConnection, Toast.LENGTH_SHORT).show();
             }
 
         } else {
@@ -250,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<Basicmovie> call = serviceInterface.getMovies(sort, Constants.API_KEY);
+        Call<Basicmovie> call = serviceInterface.getMovies(sort,apiKey);
         call.enqueue(new Callback<Basicmovie>() {
             @Override
             public void onResponse(Call<Basicmovie> call, Response<Basicmovie> response) {
@@ -316,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     public void FetchFromTMDBTwo(String sort) {
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<Basicmovie> call = serviceInterface.getMovies(sort, Constants.API_KEY);
+        Call<Basicmovie> call = serviceInterface.getMovies(sort, apiKey);
         call.enqueue(new Callback<Basicmovie>() {
             @Override
             public void onResponse(Call<Basicmovie> call, Response<Basicmovie> response) {
@@ -342,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<Basicmovie> call = serviceInterface.getMovies(sort, Constants.API_KEY);
+        Call<Basicmovie> call = serviceInterface.getMovies(sort,apiKey);
 
         call.enqueue(new Callback<Basicmovie>() {
             @Override
@@ -422,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                 if(favoriteEntries.isEmpty()){
 //                    Snackbar snackbar=Snackbar.make(findViewById(R.id.main_layout), "Please add movies to your favorite library", Snackbar.LENGTH_LONG);
-                    TSnackbar snackbar= TSnackbar.make(findViewById(R.id.main_layout), "Please add movies to your favorite library", TSnackbar.LENGTH_LONG);
+                    TSnackbar snackbar= TSnackbar.make(findViewById(R.id.main_layout), Constants.EmptyLibrary, TSnackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.WHITE);
                     View snackbarView = snackbar.getView();
 

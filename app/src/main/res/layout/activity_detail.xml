@@ -76,6 +76,7 @@
 
       <include
           layout="@layout/detail_card"
+          android:background="@android:color/black"
           />
 
 

@@ -37,6 +37,7 @@ import com.example.tensaiye.popularmovie.Adapters.CastAdapter;
 import com.example.tensaiye.popularmovie.Adapters.FavoriteAdapter;
 import com.example.tensaiye.popularmovie.Adapters.ReviewAdapter;
 import com.example.tensaiye.popularmovie.Adapters.TrailerAdapter;
+import com.example.tensaiye.popularmovie.BuildConfig;
 import com.example.tensaiye.popularmovie.GlideApp;
 import com.example.tensaiye.popularmovie.Models.BasicCredit;
 import com.example.tensaiye.popularmovie.Models.BasicReview;
@@ -97,7 +98,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private boolean isFavorite = false;
     private boolean isfav = true;
     private int mMutedColor = 0xFF333333;
-
+    String apiKey = BuildConfig.API_KEY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +122,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         mtoolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                finishAfterTransition();
+
             }
         });
 
@@ -179,7 +182,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private void FetchCast(String movie_id) {
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<BasicCredit> call = serviceInterface.getCredit(movie_id, Constants.API_KEY);
+        Call<BasicCredit> call = serviceInterface.getCredit(movie_id,apiKey);
         call.enqueue(new Callback<BasicCredit>() {
             @Override
             public void onResponse(Call<BasicCredit> call, Response<BasicCredit> response) {
@@ -200,7 +203,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private void FetchReviews(String movie_id) {
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<BasicReview> call = serviceInterface.getReviews(movie_id, Constants.API_KEY);
+        Call<BasicReview> call = serviceInterface.getReviews(movie_id, apiKey);
         call.enqueue(new Callback<BasicReview>() {
             @Override
             public void onResponse(Call<BasicReview> call, Response<BasicReview> response) {
@@ -225,7 +228,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private void FetchTrailer(String movie_id) {
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<BasicTrailer> call = serviceInterface.getTrailer(movie_id, Constants.API_KEY);
+        Call<BasicTrailer> call = serviceInterface.getTrailer(movie_id, apiKey);
         call.enqueue(new Callback<BasicTrailer>() {
             @Override
             public void onResponse(Call<BasicTrailer> call, Response<BasicTrailer> response) {
@@ -288,7 +291,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             }
         }).into(DetailPortrait);
         getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transition));
-        DetailPortrait.setTransitionName("Transition");
+        DetailPortrait.setTransitionName(Constants.TransitionName);
     }
 
     private void Delete() {
@@ -333,7 +336,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     mButton.setColorFilter(Color.WHITE);
-                    Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinate), "Movie deleted from Favorites", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinate), Constants.DeleteFav, Snackbar.LENGTH_LONG);
                     View snackbarview = snackbar.getView();
                     final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/proxima_nova_bold.otf");
 
@@ -349,7 +352,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     mButton.setColorFilter(Color.RED);
-                    Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinate), "Movie added to Favorites", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinate), Constants.AddFav, Snackbar.LENGTH_LONG);
                     View snackbarview = snackbar.getView();
                     final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/proxima_nova_bold.otf");
                     TextView tv = (TextView) (snackbarview).findViewById(android.support.design.R.id.snackbar_text);

@@ -5,6 +5,7 @@
     <string name="detail_vote_average">Rating:</string>
     <string name="detail_release_date">Release Date</string>
     <string name="review">Reviews:</string>
+    <string name="cast">Cast:</string>
     <string name="trailer">Trailers:</string>
     <string name="detail_error"> Error something is wrong</string>
     <string name="movie_poster_image">Movie Picture</string>
@@ -14,6 +15,8 @@
     <string name="favorite">Favorite</string>
     <string name="padding_detail_headers">5dp</string>
     <string name="elevation">6dp</string>
+    <string name="reviewEmpty">There are currently no reviews available!</string>
+    <string name="TrailerEmpty">There are currently no trailers available!</string>
     <string name="corner_round_radius">8dp</string>
     <string-array name="SortArray">
         <item>@string/popular</item>
@@ -22,5 +25,8 @@
     </string-array>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="Discover">Discover</string>
+    <string name="Upcoming">Upcoming</string>
+
 
 </resources>

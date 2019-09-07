@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+// References for Firebase Google Authentication: https://firebase.google.com/docs/auth/android/google-signin & https://www.youtube.com/watch?v=FtIc5UYXeKk&t=700s
 public class AuthActivity extends AppCompatActivity {
 
     static final int GOOGLE_SIGN = 123;
@@ -71,25 +72,20 @@ public class AuthActivity extends AppCompatActivity {
                 AuthActivity.this.startActivity(MovieIntent);
             }
         });
-
         if (mAuth.getCurrentUser() != null) {
             FirebaseUser user = mAuth.getCurrentUser();
             updateUI(user);
         }
-
     }
-
     @Override
     public void onBackPressed() {
 
     }
-
     private void SignInGoogle() {
         progressBar.setVisibility(View.VISIBLE);
-        Intent intentSign = googleSignInClient.getSignInIntent();
-        startActivityForResult(intentSign, GOOGLE_SIGN);
+        Intent intent = googleSignInClient.getSignInIntent();
+        startActivityForResult(intent, GOOGLE_SIGN);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -101,15 +97,13 @@ public class AuthActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w("Sign_In_Error", "Google sign in failed", e);
+                Log.w("SignError", "Google sign in failed", e);
                 // ...
             }
         }
     }
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         Log.d("TAG", "firebaseAuthWithGoogle:" + account.getId());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -128,19 +122,14 @@ public class AuthActivity extends AppCompatActivity {
                             Snackbar.make(findViewById(R.id.auth_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
-                        // ...
                     }
                 });
     }
-
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             String name = user.getDisplayName();
             String email = user.getEmail();
-
             emailAuth.setText(email);
-
             emailAuth.setVisibility(View.VISIBLE);
             emailText.setVisibility(View.VISIBLE);
             signIn.setVisibility(View.INVISIBLE);
@@ -152,11 +141,8 @@ public class AuthActivity extends AppCompatActivity {
             emailAuth.setVisibility(View.INVISIBLE);
             emailText.setVisibility(View.INVISIBLE);
             continue_btn.setVisibility(View.INVISIBLE);
-
         }
-
     }
-
     private void signOut() {
         FirebaseAuth.getInstance().signOut();
         googleSignInClient.signOut().addOnCompleteListener(this, task -> updateUI(null));
