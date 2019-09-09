@@ -4,7 +4,6 @@ import com.example.tensaiye.popularmovie.Models.BasicCredit;
 import com.example.tensaiye.popularmovie.Models.BasicReview;
 import com.example.tensaiye.popularmovie.Models.BasicTrailer;
 import com.example.tensaiye.popularmovie.Models.Basicmovie;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

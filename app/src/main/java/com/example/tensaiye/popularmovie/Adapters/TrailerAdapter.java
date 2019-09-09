@@ -11,14 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.tensaiye.popularmovie.R;
 import com.example.tensaiye.popularmovie.Models.Trailer;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
     private List<Trailer> trailerList;

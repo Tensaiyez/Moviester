@@ -29,7 +29,6 @@ public class Movie implements Parcelable, Serializable {
     private String Vote;
 
 
-
     public Movie(Parcel in) {
         this.ReleaseDate = in.readString();
         this.UserRating = in.readString();

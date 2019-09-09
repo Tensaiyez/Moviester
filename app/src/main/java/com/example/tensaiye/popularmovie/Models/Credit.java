@@ -24,7 +24,7 @@ public class Credit implements Parcelable {
     }
 
     public String getProfilePic() {
-        return movieImagepath+PROFILE_SIZE_W185+ProfilePic;
+        return movieImagepath + PROFILE_SIZE_W185 + ProfilePic;
     }
 
     public void setProfilePic(String profilePic) {
@@ -35,8 +35,6 @@ public class Credit implements Parcelable {
         this.Name = in.readString();
         this.ProfilePic = in.readString();
     }
-
-
 
 
     public static final Creator<Credit> CREATOR = new Creator<Credit>() {

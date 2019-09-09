@@ -49,6 +49,7 @@ public class Review implements Parcelable {
         dest.writeString(Author);
         dest.writeString(Content);
     }
+
     public static final Creator<Review> CREATOR = new Creator<Review>() {
         @Override
         public Review createFromParcel(Parcel in) {

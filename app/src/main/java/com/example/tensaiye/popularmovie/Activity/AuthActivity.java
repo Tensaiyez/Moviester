@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tensaiye.popularmovie.R;
-import com.google.android.gms.auth.api.Auth;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -35,7 +35,7 @@ public class AuthActivity extends AppCompatActivity {
     static final int GOOGLE_SIGN = 123;
     private FirebaseAuth mAuth;
     Button signIn, signOut, continue_btn;
-    TextView text, logo, emailAuth,emailText;
+    TextView text, emailAuth, emailText;
     ImageView image;
     ProgressBar progressBar;
     GoogleSignInClient googleSignInClient;
@@ -52,7 +52,7 @@ public class AuthActivity extends AppCompatActivity {
         text = findViewById(R.id.text);
         progressBar = findViewById(R.id.progress_circular);
         emailAuth = findViewById(R.id.Email);
-        emailText=findViewById(R.id.emailText);
+        emailText = findViewById(R.id.emailText);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.RED,
                 android.graphics.PorterDuff.Mode.MULTIPLY);
         mAuth = FirebaseAuth.getInstance();
@@ -63,8 +63,18 @@ public class AuthActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-        signIn.setOnClickListener(press -> SignInGoogle());
-        signOut.setOnClickListener(press -> signOut());
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SignInGoogle();
+            }
+        });
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
         continue_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,15 +87,18 @@ public class AuthActivity extends AppCompatActivity {
             updateUI(user);
         }
     }
+
     @Override
     public void onBackPressed() {
 
     }
+
     private void SignInGoogle() {
         progressBar.setVisibility(View.VISIBLE);
         Intent intent = googleSignInClient.getSignInIntent();
         startActivityForResult(intent, GOOGLE_SIGN);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -102,6 +115,7 @@ public class AuthActivity extends AppCompatActivity {
             }
         }
     }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         Log.d("TAG", "firebaseAuthWithGoogle:" + account.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
@@ -125,6 +139,7 @@ public class AuthActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             String name = user.getDisplayName();
@@ -143,6 +158,7 @@ public class AuthActivity extends AppCompatActivity {
             continue_btn.setVisibility(View.INVISIBLE);
         }
     }
+
     private void signOut() {
         FirebaseAuth.getInstance().signOut();
         googleSignInClient.signOut().addOnCompleteListener(this, task -> updateUI(null));

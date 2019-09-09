@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -63,34 +62,35 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private static final String TAG = MainActivity.class.getSimpleName();
     private MovieAdapter mAdapter;
     private FavoriteAdapter favoriteAdapter;
-    RecyclerView recyclerView;
-    RecyclerView recyclerView2;
-    RecyclerView recyclerView3;
-    TextView popular_tv;
-    TextView Toolbar_tv;
-    CardView cardView;
-    CardView cardView2;
-    TextView Highest_tv;
-    TextView Upcoming_tv;
-    Toolbar myToolbar;
-    ProgressBar progressBar;
-    BottomNavigationView bottomNavigationView;
+    private RecyclerView recyclerView;
+    private RecyclerView recyclerView2;
+    private RecyclerView recyclerView3;
+    private TextView popular_tv;
+    private TextView Toolbar_tv;
+    private CardView cardView;
+    private CardView cardView2;
+    private TextView Highest_tv;
+    private TextView Upcoming_tv;
+    private Toolbar myToolbar;
+    private ProgressBar progressBar;
+    private BottomNavigationView bottomNavigationView;
 
-    NestedScrollView nestedScrollView;
-    List<FavoriteEntry> favEntry = new ArrayList<>();
+    private NestedScrollView nestedScrollView;
+    private List<FavoriteEntry> favEntry = new ArrayList<>();
     private List<Movie> movies = new ArrayList<>();
     private List<String> movieTitle = new ArrayList<>();
-    private List<String> movieImage = new ArrayList<>();
+
     private List<String> movieRating = new ArrayList<>();
 
-    private List<Review> reviewList;
+
     private MovieDatabase mDb;
     private int SpamCount = 2;
-    int gridOrientation = GridLayoutManager.HORIZONTAL;
-    private String RETREIVE = "retreive";
+    private int gridOrientation = GridLayoutManager.HORIZONTAL;
+    
     SharedPreferences sharedPreferences2;
     SharedPreferences.Editor editor;
-    String apiKey =BuildConfig.API_KEY;
+    private String apiKey = BuildConfig.API_KEY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -111,29 +111,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         cardView2 = findViewById(R.id.title_main2_cv);
         Highest_tv = MainActivity.this.findViewById(R.id.HighestTitle);
         Upcoming_tv = MainActivity.this.findViewById(R.id.UpcomingTitle);
-
         progressBar = findViewById(R.id.progress_circular_main);
-
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         if (savedInstanceState == null || !savedInstanceState.containsKey(Constants.MOVIEBUNDLE)) {
-//            if (isOnline()) {
-//                FetchFromTMDBOne(Constants.Popular);
-//                FetchFromTMDBTwo(Constants.TopRated);
-//                FetchFromTMDBThree(Constants.Upcoming);
-//
-//
-//            } else if (!isOnline()) {
-//                Toast.makeText(this, "No Internet Connection...Please Connect To The Internet", Toast.LENGTH_SHORT).show();
-//            }
+
             progressBar.setVisibility(View.INVISIBLE);
             new AsyncTaskFetch().execute();
-             if (!isOnline()) {
+            if (!isOnline()) {
 
                 Toast.makeText(MainActivity.this, Constants.InternetConnection, Toast.LENGTH_SHORT).show();
             }
-
         } else {
             movies = savedInstanceState.getParcelableArrayList(Constants.MOVIEBUNDLE);
 
@@ -154,11 +143,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 return true;
             }
         });
-
-//        defaults();
-
-
     }
+
     private class AsyncTaskFetch extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -173,15 +159,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 FetchFromTMDBTwo(Constants.TopRated);
                 FetchFromTMDBThree(Constants.Upcoming);
             }
-
             return null;
         }
+
         @Override
-        protected void onPostExecute(Void  s) {
+        protected void onPostExecute(Void s) {
             super.onPostExecute(s);
             progressBar.setVisibility(View.INVISIBLE);
         }
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -252,28 +237,25 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<Basicmovie> call = serviceInterface.getMovies(sort,apiKey);
+        Call<Basicmovie> call = serviceInterface.getMovies(sort, apiKey);
         call.enqueue(new Callback<Basicmovie>() {
             @Override
             public void onResponse(Call<Basicmovie> call, Response<Basicmovie> response) {
                 recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, SpamCount, gridOrientation, false));
                 movies = response.body().getResults();
-                sharedPreferences2 = getSharedPreferences("MovieName", Context.MODE_PRIVATE);
+                sharedPreferences2 = getSharedPreferences(Constants.SP_Name, Context.MODE_PRIVATE);
                 editor = sharedPreferences2.edit();
 
-                for (int i = 0; i <  movies.size()-1; i++) {
+                for (int i = 0; i < movies.size() - 1; i++) {
                     movieTitle.add(movies.get(i).getOriginalName());
-                    movieImage.add(movies.get(i).getBackdrop());
                     movieRating.add(movies.get(i).getUserRating());
 
-                    Log.d("title", " " + movieTitle.get(i));
-                    Log.d("image", " " + movieImage.get(i));
                 }
 
-                for (int i = 0; i < movies.size()-1; i++) {
-                    editor.putString("Movie" + i, movieTitle.get(i));
-                    editor.putString("Image" + i, movieImage.get(i));
-                    editor.putString("Rating"+i,movieRating.get(i));
+                for (int i = 0; i < movies.size() - 1; i++) {
+                    editor.putString(Constants.MovieTitle_SP + i, movieTitle.get(i));
+
+                    editor.putString(Constants.MovieRating_SP + i, movieRating.get(i));
                 }
                 editor.apply();
                 mAdapter = new MovieAdapter(movies, R.layout.moviecard, MainActivity.this);
@@ -291,21 +273,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 
-    public void defaults() {
-//    SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
-//
-//    myToolbar.setBackgroundColor( sharedPreferences.getInt("red_theme", ContextCompat.getColor(this,R.color.red)));
-//    sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-//    if (Build.VERSION.SDK_INT >= 21) {
-//        getWindow().setNavigationBarColor(ContextCompat.getColor(this,R.color.grey));
-//        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.red_200));
-//    }
-//    bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
-//    bottomNavigationView.setItemBackgroundResource(R.color.red);
-//    myToolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
-//    Toolbar_tv.setTextColor(ContextCompat.getColor(this,R.color.white));
-
-    }
 
     @Override
     protected void onDestroy() {
@@ -344,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<Basicmovie> call = serviceInterface.getMovies(sort,apiKey);
+        Call<Basicmovie> call = serviceInterface.getMovies(sort, apiKey);
 
         call.enqueue(new Callback<Basicmovie>() {
             @Override
@@ -405,8 +372,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         favoriteAdapter = new FavoriteAdapter(favEntry, getApplicationContext(), movies);
         setViewModel();
 
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(favoriteAdapter);
 
@@ -420,20 +385,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onChanged(@Nullable List<FavoriteEntry> favoriteEntries) {
                 Log.d(TAG, "Updataing list of favorites from ViewModel ");
                 favoriteAdapter.setFavoriteList(favoriteEntries);
-                Log.d("favEntry3",favoriteEntries.size()+" ");
+                if (favoriteEntries.isEmpty()) {
 
-                if(favoriteEntries.isEmpty()){
-//                    Snackbar snackbar=Snackbar.make(findViewById(R.id.main_layout), "Please add movies to your favorite library", Snackbar.LENGTH_LONG);
-                    TSnackbar snackbar= TSnackbar.make(findViewById(R.id.main_layout), Constants.EmptyLibrary, TSnackbar.LENGTH_LONG);
+                    TSnackbar snackbar = TSnackbar.make(findViewById(R.id.main_layout), Constants.EmptyLibrary, TSnackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.WHITE);
                     View snackbarView = snackbar.getView();
 
-                    final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/proxima_nova_bold.otf");
+                    final Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/proxima_nova_bold.otf");
 
                     TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
                     textView.setTextColor(Color.WHITE);
                     textView.setTypeface(tf);
-                    snackbar.setIconLeft(R.drawable.ic_favorite_black_24dp,30);
+                    snackbar.setIconLeft(R.drawable.ic_favorite_black_24dp, 30);
                     snackbar.setIconPadding(8);
                     snackbar.show();
 
@@ -441,6 +404,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
     }
+
     // The method below checks if the phone is connected to a network.
     //https://developer.android.com/training/monitoring-device-state/connectivity-monitoring#java This site has helped me find a way in which to check the Network Status of the app.
     public boolean isOnline() {
@@ -453,9 +417,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//        if (key.equals(getString(R.string.redTheme))) {
-//            myToolbar.setBackgroundColor(sharedPreferences.getInt("red_theme", ContextCompat.getColor(this, R.color.red)));
-//        }
+
     }
 }
 

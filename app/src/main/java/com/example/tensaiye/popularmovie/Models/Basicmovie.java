@@ -1,6 +1,7 @@
 package com.example.tensaiye.popularmovie.Models;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Basicmovie {
@@ -11,10 +12,10 @@ public class Basicmovie {
     public List<Movie> getResults() {
         return results;
     }
+
     public void setResults(List<Movie> results) {
         this.results = results;
     }
-
 
 
 }

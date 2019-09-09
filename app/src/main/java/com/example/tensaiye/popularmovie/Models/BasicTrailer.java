@@ -11,6 +11,7 @@ public class BasicTrailer {
     public List<Trailer> getResults() {
         return results;
     }
+
     public void setResult(List<Trailer> results) {
         this.results = results;
     }

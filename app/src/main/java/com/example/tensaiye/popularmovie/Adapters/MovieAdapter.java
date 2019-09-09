@@ -1,36 +1,28 @@
 package com.example.tensaiye.popularmovie.Adapters;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.tensaiye.popularmovie.Activity.DetailActivity;
-import com.example.tensaiye.popularmovie.Activity.MainActivity;
 import com.example.tensaiye.popularmovie.GlideApp;
 import com.example.tensaiye.popularmovie.Models.Movie;
 import com.example.tensaiye.popularmovie.R;
-import com.squareup.picasso.Picasso;
 import java.util.List;
 
 
@@ -95,18 +87,6 @@ public MovieAdapter(List<Movie>movies,int layoutID,Context context){
             }
         });
 
-
-//movieViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//    @Override
-//    public void onClick(View v) {
-//        Intent intent=new Intent(mContext,DetailActivity.class);
-//        movieViewHolder.imageView.setTransitionName("poster_transition");
-//        Pair<View, String> pair1 = Pair.create((View) movieViewHolder.imageView, movieViewHolder.imageView.getTransitionName());
-//
-//        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, pair1);
-//        mContext.startActivity(intent, optionsCompat.toBundle());
-//    }
-//});
         GlideApp.with(mContext).asBitmap().dontTransform().load(movies.get(i).getPosterImage()).diskCacheStrategy(DiskCacheStrategy.ALL).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
@@ -118,12 +98,6 @@ public MovieAdapter(List<Movie>movies,int layoutID,Context context){
                 return false;
             }
         }).into(movieViewHolder.imageView);
-
-//        Picasso.with(mContext)
-//                .load(movies.get(i).getPosterImage())
-//                .into(movieViewHolder.imageView);
-
-
     }
 
     @Override

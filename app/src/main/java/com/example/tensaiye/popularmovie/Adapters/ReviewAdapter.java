@@ -2,7 +2,6 @@ package com.example.tensaiye.popularmovie.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.tensaiye.popularmovie.R;
 import com.example.tensaiye.popularmovie.Models.Review;
-
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
     private List<Review> reviewList;

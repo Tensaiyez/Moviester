@@ -1,11 +1,9 @@
 package com.example.tensaiye.popularmovie.Activity;
 
-import android.app.ActivityOptions;
+
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -26,7 +23,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.andrognito.flashbar.Flashbar;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -53,9 +49,12 @@ import com.example.tensaiye.popularmovie.Models.Review;
 import com.example.tensaiye.popularmovie.Models.Trailer;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
+
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,23 +63,23 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private Movie movies;
-    TextView mTitle;
-    TextView mUserRating;
-    TextView mReleaseDate;
-    TextView mDescription;
-    TextView mVote;
-    TextView mReviewContent;
-    TextView mNoReview;
-    TextView mNoTrailer;
-    FloatingActionButton mButton;
-    String vote;
-    String title;
-    String releaseDate;
-    String userRating;
-    String overView;
-    String poster;
-    String id;
-    String backdrop;
+    private TextView mTitle;
+    private TextView mUserRating;
+    private TextView mReleaseDate;
+    private TextView mDescription;
+    private TextView mVote;
+    private TextView mReviewContent;
+    private TextView mNoReview;
+    private TextView mNoTrailer;
+    private FloatingActionButton mButton;
+    private String vote;
+    private String title;
+    private String releaseDate;
+    private String userRating;
+    private String overView;
+    private String poster;
+    private String id;
+    private String backdrop;
 
     private List<Review> reviewList = new ArrayList<>();
     private List<Trailer> TrailerList = new ArrayList<>();
@@ -96,9 +95,10 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private MovieDatabase mDb;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private boolean isFavorite = false;
-    private boolean isfav = true;
+
     private int mMutedColor = 0xFF333333;
-    String apiKey = BuildConfig.API_KEY;
+    private String apiKey = BuildConfig.API_KEY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,7 +182,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private void FetchCast(String movie_id) {
         RetrofitService retrofitService = new RetrofitService();
         ServiceInterface serviceInterface = retrofitService.getRetrofit().create(ServiceInterface.class);
-        Call<BasicCredit> call = serviceInterface.getCredit(movie_id,apiKey);
+        Call<BasicCredit> call = serviceInterface.getCredit(movie_id, apiKey);
         call.enqueue(new Callback<BasicCredit>() {
             @Override
             public void onResponse(Call<BasicCredit> call, Response<BasicCredit> response) {
@@ -250,7 +250,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void populateUI(Movie movie) {
-
 
 
         mTitle = (TextView) findViewById(R.id.Original_tv);
