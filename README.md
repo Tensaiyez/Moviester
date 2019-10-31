@@ -5,5 +5,7 @@
 
 **##MainActivity**
 
-![ezgif com-resize](https://user-images.githubusercontent.com/42677333/67908029-467c0880-fb50-11e9-83bf-db4256c4c87d.gif)
+
+![ezgif com-resize (1)](https://user-images.githubusercontent.com/42677333/67908067-6dd2d580-fb50-11e9-9f09-8f0b03658022.gif)
+
 
