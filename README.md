@@ -29,4 +29,4 @@
 4. Add TheMovieDb API Key inside gradle.properties file. 
    It'll look like this API_KEY=" "
 
-### Now you're all done enjoy **Moviester!
+### Now you're all done enjoy **Moviester!**###
