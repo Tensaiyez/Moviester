@@ -3,7 +3,7 @@
 
 
 
-## **MainActivity**#                                               
+## **MainActivity**                                            
 
 
 ![ezgif com-resize (1)](https://user-images.githubusercontent.com/42677333/67908067-6dd2d580-fb50-11e9-9f09-8f0b03658022.gif)   
@@ -29,4 +29,4 @@
 4. Add TheMovieDb API Key inside gradle.properties file. 
    It'll look like this API_KEY=" "
 
-### Now you're all done enjoy **Moviester!**###
+### Now you're all done enjoy **Moviester!**
