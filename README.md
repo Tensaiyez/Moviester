@@ -5,4 +5,5 @@
 
 **##MainActivity**
 
-![ezgif com-video-to-gif](https://user-images.githubusercontent.com/42677333/67907768-724abe80-fb4f-11e9-89b8-26dd1dae33d9.gif)
+![ezgif com-resize](https://user-images.githubusercontent.com/42677333/67908029-467c0880-fb50-11e9-83bf-db4256c4c87d.gif)
+
