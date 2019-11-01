@@ -30,3 +30,6 @@
    It'll look like this API_KEY=" "
 
 ### Now you're all done enjoy **Moviester!**
+
+# **Libraries Used**
+*https://github.com/bumptech/glide
