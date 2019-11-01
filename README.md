@@ -31,5 +31,15 @@
 
 ### Now you're all done enjoy **Moviester!**
 
-# **Libraries Used**
-*https://github.com/bumptech/glide
+# **Libraries**
+- [Glide](https://github.com/bumptech/glide)
+- [Retrofit 2](https://github.com/square/retrofit)
+- [Picasso](	https://github.com/square/picasso)
+- [Gson](https://github.com/google/gson)
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+- [CircleImageView](https://github.com/hdodenhof/CircleImageView)
+- [TextDrawable](https://github.com/amulyakhare/TextDrawable)
+- [Room](https://developer.android.com/topic/libraries/architecture/room)
+- [Palette](https://developer.android.com/reference/android/support/v7/graphics/Palette)
+- [Flashbar](https://github.com/aritraroy/Flashbar)
+- [Snackbar](https://developer.android.com/reference/android/support/design/widget/Snackbar)
