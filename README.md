@@ -3,10 +3,11 @@
 
 
 
-## **MainActivity**                                             **DetailActivity**                                           
+     
+## MainActivity________  | __________ DetailActivity
 
+![ezgif com-resize (1)](https://user-images.githubusercontent.com/42677333/67908067-6dd2d580-fb50-11e9-9f09-8f0b03658022.gif)__________ ![ezgif com-resize (2)](https://user-images.githubusercontent.com/42677333/67908333-8abbd880-fb51-11e9-9183-ddac969f5908.gif))
 
-![ezgif com-resize (1)](https://user-images.githubusercontent.com/42677333/67908067-6dd2d580-fb50-11e9-9f09-8f0b03658022.gif)   ![ezgif com-resize (2)](https://user-images.githubusercontent.com/42677333/67908333-8abbd880-fb51-11e9-9183-ddac969f5908.gif)
 
 
 
