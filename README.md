@@ -4,20 +4,16 @@
 
 
      
-##                MainActivity __________________ | _______________ DetailActivity
+## &nbsp; &nbsp;   &nbsp;  &nbsp;   &nbsp;   &nbsp; MainActivity   &nbsp; &nbsp;   &nbsp;   &nbsp;  &nbsp;   &nbsp; &nbsp;   &nbsp; &nbsp;  | &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;    &nbsp;   &nbsp;  DetailActivity
 
-![ezgif com-resize (1)](https://user-images.githubusercontent.com/42677333/67908067-6dd2d580-fb50-11e9-9f09-8f0b03658022.gif)__________ ![ezgif com-resize (2)](https://user-images.githubusercontent.com/42677333/67908333-8abbd880-fb51-11e9-9183-ddac969f5908.gif))
-
-
+![ezgif com-resize (1)](https://user-images.githubusercontent.com/42677333/67908067-6dd2d580-fb50-11e9-9f09-8f0b03658022.gif)&nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp; &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;  ![ezgif com-resize (2)](https://user-images.githubusercontent.com/42677333/67908333-8abbd880-fb51-11e9-9183-ddac969f5908.gif))
 
 
-## **Widget**
 
-![ezgif com-resize](https://user-images.githubusercontent.com/42677333/67908580-60b6e600-fb52-11e9-8bef-54e700997cce.jpg)
 
-## **Favorites**
+## &nbsp; &nbsp;   &nbsp;   &nbsp;   &nbsp; &nbsp;   &nbsp;   &nbsp; Widget    &nbsp;  &nbsp;   &nbsp;   &nbsp;   &nbsp; &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;&nbsp;   &nbsp;  |   &nbsp;   &nbsp;&nbsp;   &nbsp;   &nbsp;   &nbsp; &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp; Favorites
 
-![ezgif com-resize (1)](https://user-images.githubusercontent.com/42677333/68488842-ee11ce80-0213-11ea-9d97-034311e9c09e.jpg)
+![ezgif com-resize](https://user-images.githubusercontent.com/42677333/67908580-60b6e600-fb52-11e9-8bef-54e700997cce.jpg)&nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp; &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp; ![ezgif com-resize (1)](https://user-images.githubusercontent.com/42677333/68488842-ee11ce80-0213-11ea-9d97-034311e9c09e.jpg)
 
 # Getting Started
 
